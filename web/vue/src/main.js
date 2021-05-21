@@ -8,7 +8,7 @@ import router from './router'
 import store from './store/index'
 
 Vue.config.productionTip = false
-Vue.use(ElementUI)
+Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
 
 Vue.directive('focus', {
   inserted: function (el) {

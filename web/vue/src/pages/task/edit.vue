@@ -115,7 +115,6 @@
               <el-input
                 type="textarea"
                 :rows="5"
-                size="medium"
                 width="100"
                 :placeholder="commandPlaceholder"
                 v-model="form.command">
@@ -237,7 +236,6 @@
               <el-input
                 type="textarea"
                 :rows="3"
-                size="medium"
                 width="100"
                 v-model="form.remark">
               </el-input>
