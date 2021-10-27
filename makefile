@@ -45,10 +45,26 @@ package: build-vue statik
 package-all: build-vue statik
 	bash ./package.sh -p 'linux darwin windows'
 
+.PHONY: package-linux
+package-linux: build-vue statik
+	bash ./package.sh -p 'linux'
+
+.PHONY: package-windows
+package-windows: build-vue statik
+	bash ./package.sh -p 'windows'
+
+.PHONY: package-mac
+package-mac: build-vue statik
+	bash ./package.sh -p 'darwin'
+
 .PHONY: build-vue
 build-vue:
+	/bin/rm -rf web/vue/dist/static/
+	@echo start build-vue-all
 	cd web/vue && yarn run build
-	cp -r web/vue/dist/* web/public/
+	@echo start build-vue-copy
+	#cp -r web/vue/dist/* web/public/
+	@echo end build-vue
 
 .PHONY: install-vue
 install-vue:
@@ -60,13 +76,15 @@ run-vue:
 
 .PHONY: statik
 statik:
-	go get github.com/rakyll/statik
+	@echo start build statik
+	#go get github.com/rakyll/statik
 	go generate ./...
+	@echo after build statik
 
 .PHONY: lint
 	golangci-lint run
 
 .PHONY: clean
 clean:
-	rm bin/gocron
-	rm bin/gocron-node
+	/bin/rm bin/gocron
+	/bin/rm bin/gocron-node
