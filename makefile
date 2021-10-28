@@ -63,7 +63,7 @@ build-vue:
 	@echo start build-vue-all
 	cd web/vue && yarn run build
 	@echo start build-vue-copy
-	#cp -r web/vue/dist/* web/public/
+	cp -r web/vue/dist/* web/public/
 	@echo end build-vue
 
 .PHONY: install-vue
