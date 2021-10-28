@@ -137,6 +137,11 @@ docker run --name gocron --link mysql:db -p 5920:5920 -d ouqg/gocron
 
 ## ChangeLog
 
+v1.6
+--------
+* fix 修复构建过程的一些问题。
+* optimize: 优化 task 任务页面的 UI。按钮调小、表格宽度更合理。
+
 v1.5
 --------
 * 前端使用Vue+ElementUI重构
