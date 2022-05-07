@@ -137,6 +137,11 @@ docker run --name gocron --link mysql:db -p 5920:5920 -d ouqg/gocron
 
 ## ChangeLog
 
+v1.7
+--------
+* optimize: 发邮件时标题里增加了IP。这样收件人就知道来自哪个管理进程了，避免测试、生产混乱（虽然不是最好的方式）。
+
+
 v1.6
 --------
 * fix 修复构建过程的一些问题。
