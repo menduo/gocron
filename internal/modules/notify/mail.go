@@ -1,6 +1,7 @@
 package notify
 
 import (
+	"net"
 	"strconv"
 	"strings"
 	"time"
@@ -52,7 +53,7 @@ func (mail *Mail) send(mailSetting models.Mail, toUsers []string, msg Message) {
 	gomailMessage := gomail.NewMessage()
 	gomailMessage.SetHeader("From", mailSetting.User)
 	gomailMessage.SetHeader("To", toUsers...)
-	gomailMessage.SetHeader("Subject", "gocron-定时任务通知")
+	gomailMessage.SetHeader("Subject", "gocron-定时任务通知-来自IP: "+getLocalIP())
 	gomailMessage.SetBody("text/html", body)
 	mailer := gomail.NewDialer(mailSetting.Host, mailSetting.Port,
 		mailSetting.User, mailSetting.Password)
@@ -81,4 +82,20 @@ func (mail *Mail) getActiveMailUsers(mailSetting models.Mail, msg Message) []str
 	}
 
 	return users
+}
+
+func getLocalIP() string {
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		return ""
+	}
+	for _, address := range addrs {
+		// check the address type and if it is not a loopback the display it
+		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if ipnet.IP.To4() != nil {
+				return ipnet.IP.String()
+			}
+		}
+	}
+	return ""
 }
