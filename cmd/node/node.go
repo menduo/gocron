@@ -37,7 +37,7 @@ func main() {
 	flag.StringVar(&certFile, "cert-file", "", "./gocron-node -cert-file path")
 	flag.StringVar(&keyFile, "key-file", "", "./gocron-node -key-file path")
 	flag.StringVar(&logLevel, "log-level", "info", "-log-level error")
-	flag.StringVar(&envName, "envname", "生产环境", "./gocron-node -envname 测试c3")
+	flag.StringVar(&envName, "envname", "开发环境", "./gocron-node -envname 测试c3")
 	flag.Parse()
 	level, err := log.ParseLevel(logLevel)
 	if err != nil {

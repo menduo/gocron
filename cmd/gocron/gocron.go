@@ -66,7 +66,7 @@ func getCommands() []cli.Command {
 			},
 			cli.StringFlag{
 				Name:        "envname,n",
-				Value:       "生产环境",
+				Value:       "开发环境",
 				Usage:       "envname, 测试c3, 测试c4",
 				Destination: &envName,
 			},

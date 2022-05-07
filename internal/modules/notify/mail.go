@@ -1,6 +1,7 @@
 package notify
 
 import (
+	"fmt"
 	"github.com/ouqiang/gocron/internal/modules/app"
 	"net"
 	"strconv"
@@ -54,7 +55,10 @@ func (mail *Mail) send(mailSetting models.Mail, toUsers []string, msg Message) {
 	gomailMessage := gomail.NewMessage()
 	gomailMessage.SetHeader("From", mailSetting.User)
 	gomailMessage.SetHeader("To", toUsers...)
-	gomailMessage.SetHeader("Subject", "gocron-定时任务通知-来自:  "+app.GetEnvName())
+
+	subject := fmt.Sprintf("gocron-定时任务通知-实例：%s，ip：%s", app.GetEnvName(), getLocalIP())
+
+	gomailMessage.SetHeader("Subject", subject)
 	gomailMessage.SetBody("text/html", body)
 	mailer := gomail.NewDialer(mailSetting.Host, mailSetting.Port,
 		mailSetting.User, mailSetting.Password)
