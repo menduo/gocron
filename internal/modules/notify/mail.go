@@ -56,7 +56,7 @@ func (mail *Mail) send(mailSetting models.Mail, toUsers []string, msg Message) {
 	gomailMessage.SetHeader("From", mailSetting.User)
 	gomailMessage.SetHeader("To", toUsers...)
 
-	subject := fmt.Sprintf("gocron-定时任务通知-实例：%s，ip：%s", app.GetEnvName(), getLocalIP())
+	subject := fmt.Sprintf("gocron-定时任务通知-[实例：%s/%s]", app.GetEnvName(), getLocalIP())
 
 	gomailMessage.SetHeader("Subject", subject)
 	gomailMessage.SetBody("text/html", body)
