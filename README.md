@@ -105,6 +105,7 @@ docker run --name gocron --link mysql:db -p 5920:5920 -d ouqg/gocron
     * --host 默认0.0.0.0
     * -p 端口, 指定端口, 默认5920
     * -e 指定运行环境, dev|test|prod, dev模式下可查看更多日志信息, 默认prod
+    * --envname 环境名称， 发邮件时会追加到标题中
     * -h 查看帮助
 * gocron-node
     * -allow-root *nix平台允许以root用户运行
@@ -113,6 +114,7 @@ docker run --name gocron --link mysql:db -p 5920:5920 -d ouqg/gocron
     * -ca-file   CA证书文件   
     * -cert-file 证书文件  
     * -key-file  私钥文件
+    * --envname 环境名称， 发邮件时会追加到标题中
     * -h 查看帮助
     * -v 查看版本
 
@@ -139,7 +141,7 @@ docker run --name gocron --link mysql:db -p 5920:5920 -d ouqg/gocron
 
 v1.7
 --------
-* optimize: 发邮件时标题里增加了IP。这样收件人就知道来自哪个管理进程了，避免测试、生产混乱（虽然不是最好的方式）。
+* optimize: 新增 envname 参数，发邮件时标题里增加了envname和IP。这样收件人就知道来自哪个管理进程了，避免测试、生产混乱。
 
 
 v1.6
