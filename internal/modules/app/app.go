@@ -32,7 +32,17 @@ var (
 	VersionId int // 版本号
 	// VersionFile 版本文件
 	VersionFile string // 版本号文件
+
+	envName string // 环境名称
 )
+
+func SetEnvName(name string) {
+	envName = name
+}
+
+func GetEnvName() string {
+	return envName
+}
 
 // InitEnv 初始化
 func InitEnv(versionString string) {

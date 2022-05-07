@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # 生成压缩包 xx.tar.gz或xx.zip
-# 使用 ./package.sh -a amd64 -p linux -v v1.6.1
+# 使用 ./package.sh -a amd64 -p linux -v v1.7.0
 
 # 任何命令返回非0值退出
 set -o errexit
@@ -18,7 +18,7 @@ BINARY_NAME=''
 MAIN_FILE=""
 
 # 提取git最新tag作为应用版本
-VERSION=''
+VERSION='1.7.0'
 # 最新git commit id
 GIT_COMMIT_ID=''
 

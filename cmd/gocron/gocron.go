@@ -23,6 +23,7 @@ import (
 var (
 	AppVersion           = "1.7"
 	BuildDate, GitCommit string
+	envName              string
 )
 
 // web服务器默认端口
@@ -63,6 +64,12 @@ func getCommands() []cli.Command {
 				Value: "prod",
 				Usage: "runtime environment, dev|test|prod",
 			},
+			cli.StringFlag{
+				Name:        "envname,n",
+				Value:       "生产环境",
+				Usage:       "envname, 测试c3, 测试c4",
+				Destination: &envName,
+			},
 		},
 	}
 
@@ -74,6 +81,7 @@ func runWeb(ctx *cli.Context) {
 	setEnvironment(ctx)
 	// 初始化应用
 	app.InitEnv(AppVersion)
+	app.SetEnvName(envName)
 	// 初始化模块 DB、定时任务等
 	initModule()
 	// 捕捉信号,配置热更新等
