@@ -40,9 +40,9 @@ LDFLAGS=''
 # 需要打包的文件
 INCLUDE_FILE=()
 # 打包文件生成目录
-PACKAGE_DIR='./dist/'
+PACKAGE_DIR='dist'
 # 编译文件生成目录
-BUILD_DIR=''
+BUILD_DIR='build'
 
 # 获取git 最新tag name
 git_latest_tag() {
@@ -105,8 +105,8 @@ init() {
     GIT_COMMIT_ID=`git_latest_commit`
     LDFLAGS="-w -X 'main.AppVersion=${VERSION}' -X 'main.BuildDate=`date '+%Y-%m-%d %H:%M:%S'`' -X 'main.GitCommit=${GIT_COMMIT_ID}'"
 
-    PACKAGE_DIR=./dist/${BINARY_NAME}-package
-    BUILD_DIR=${BINARY_NAME}-build
+    PACKAGE_DIR=dist/${BINARY_NAME}-package
+    BUILD_DIR=build/${BINARY_NAME}-build
 
     if [[ -d ${BUILD_DIR} ]];then
         /bin/rm -rf ${BUILD_DIR}
@@ -129,7 +129,11 @@ build() {
             else
                 FILENAME=${BINARY_NAME}
             fi
+            echo "Building ${OS}-${ARCH}..."
             env CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build -ldflags "${LDFLAGS}" -o ${BUILD_DIR}/${BINARY_NAME}-${OS}-${ARCH}/${FILENAME} ${MAIN_FILE}
+            ls ${BUILD_DIR}/${BINARY_NAME}-${OS}-${ARCH}/${FILENAME}
+            ls ${MAIN_FILE}
+            echo "Building ${OS}-${ARCH}...done"
         done
     done
 }
@@ -142,9 +146,10 @@ package_binary() {
         for ARCH in "${INPUT_ARCH[@]}";do
         package_file ${BINARY_NAME}-${OS}-${ARCH}
         if [[ "${OS}" = "windows" ]];then
-            zip -rq ../${PACKAGE_DIR}/${BINARY_NAME}-${VERSION}-${OS}-${ARCH}.zip ${BINARY_NAME}-${OS}-${ARCH}
+            zip -rq ../../${PACKAGE_DIR}/${BINARY_NAME}-${VERSION}-${OS}-${ARCH}.zip ${BINARY_NAME}-${OS}-${ARCH}
         else
-            tar czf ../${PACKAGE_DIR}/${BINARY_NAME}-${VERSION}-${OS}-${ARCH}.tar.gz ${BINARY_NAME}-${OS}-${ARCH}
+          echo `pwd`
+            tar czf ../../${PACKAGE_DIR}/${BINARY_NAME}-${VERSION}-${OS}-${ARCH}.tar.gz ${BINARY_NAME}-${OS}-${ARCH}
         fi
         done
     done
@@ -165,14 +170,16 @@ package_file() {
 # 清理
 clean() {
     if [[ -d ${BUILD_DIR} ]];then
-        rm -rf ${BUILD_DIR}
+        /bin/rm -rf ${BUILD_DIR}
     fi
 }
 
 # 运行
 run() {
     init
+    echo "开始编译"
     build
+    echo "编译完成"
     package_binary
     clean
 }
@@ -181,7 +188,6 @@ package_gocron() {
     BINARY_NAME='gocron'
     MAIN_FILE="./cmd/gocron/gocron.go"
     INCLUDE_FILE=()
-
 
     run
 }
