@@ -40,3 +40,4 @@ profile/*
 node_modules
 _pid*
 dist
+vendor/
